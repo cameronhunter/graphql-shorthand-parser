@@ -1,0 +1,19 @@
+{
+  "name": "graphql-shorthand-parser",
+  "version": "0.0.1",
+  "description": "Parse GraphQL schemas from shorthand notation",
+  "main": "dist/parser.js",
+  "scripts": {
+    "generate-parser": "pegjs ./lib/grammar.pegjs ./dist/parser.js",
+    "parse": "npm run generate-parser && ./bin/parse",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "graphql"
+  ],
+  "author": "Cameron Hunter <hello@cameronhunter.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "pegjs": "^0.9.0"
+  }
+}

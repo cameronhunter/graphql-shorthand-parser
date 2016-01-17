@@ -1,0 +1,38 @@
+// One of the films in the Star Wars Trilogy
+enum Episode {
+  NEWHOPE
+  EMPIRE
+  JEDI
+}
+
+// A character in the Star Wars Trilogy
+interface Character {
+  id: String!               // The id of the character
+  name: String              // The name of the character
+  friends: [Character]      // The friends of the character, or an empty list if they have none
+  appearsIn: [Episode]      // Which movies they appear in
+}
+
+// A humanoid creature in the Star Wars universe
+type Human : Character {
+  id: String!               // The id of the human
+  name: String              // The name of the human
+  friends: [Character]      // The friends of the character, or an empty list if they have none
+  appearsIn: [Episode]      // Which movies they appear in
+  homePlanet: String        // The home planet of the human, or null if unknown
+}
+
+// A mechanical creature in the Star Wars universe
+type Droid : Character {
+  id: String!               // The id of the droid
+  name: String              // The name of the droid
+  friends: [Character]      // The friends of the character, or an empty list if they have none
+  appearsIn: [Episode]      // Which movies they appear in
+  primaryFunction: String   // The primary function of the droid
+}
+
+type Query {
+  hero(episode: Episode): Character
+  human(id: String!): Human
+  droid(id: String!): Droid
+}
