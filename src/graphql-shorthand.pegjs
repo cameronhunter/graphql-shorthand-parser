@@ -2,15 +2,15 @@ start
   = WS* definitions:(Enum / Interface / Object)* WS*
     { return definitions; }
 Enum
-  = "enum" SPACE name:Type begin_body values:EnumValueList close_body
+  = "enum" SPACE name:Type BEGIN_BODY values:EnumValueList CLOSE_BODY
     { return { type: "ENUM", name, values }; }
 
 Interface
-  = "interface" SPACE name:Type begin_body fields:FieldList close_body
+  = "interface" SPACE name:Type BEGIN_BODY fields:FieldList CLOSE_BODY
     { return { type: "INTERFACE", name, fields }; }
 
 Object
-  = "type" SPACE name:Type interfaces:(COLON list:TypeList { return list; })? begin_body fields:FieldList close_body
+  = "type" SPACE name:Type interfaces:(COLON list:TypeList { return list; })? BEGIN_BODY fields:FieldList CLOSE_BODY
     { return { type: "TYPE", name, fields, ...(interfaces && { interfaces }) }; }
 
 Identifier
@@ -32,7 +32,7 @@ TypeList
     { return [head, ...tail]; }
 
 Field
-  = name:Identifier args:(begin_args fields:FieldList close_args { return fields; })? COLON type:ReturnType
+  = name:Identifier args:(BEGIN_ARGS fields:FieldList CLOSE_ARGS { return fields; })? COLON type:ReturnType
     { return { [name]: { ...type, ...(args && { args }) } }; }
 
 FieldList
@@ -47,35 +47,19 @@ EnumValueList
   = head:EnumValue tail:(SEPARATOR value:EnumValue { return value; })*
     { return [head, ...tail]; }
 
-SEPARATOR
-  = COMMA_SEP / EOL_SEP
+BEGIN_BODY = WS* "{" WS*
+CLOSE_BODY = WS* "}" WS*
 
-COMMA_SEP
-  = WS* "," WS*
+BEGIN_ARGS = WS* "(" WS*
+CLOSE_ARGS = WS* ")" WS*
 
-EOL_SEP
-  = SPACE* NEW_LINE SPACE*
+COLON = WS* ":" WS*
 
-NEW_LINE
-  = ("\r\n" / [\r\n])+
+WS = (SPACE / NEW_LINE)+
 
-SPACE
-  = [ \t]+
+SEPARATOR = COMMA_SEP / EOL_SEP
+COMMA_SEP = WS* "," WS*
+EOL_SEP = SPACE* NEW_LINE SPACE*
 
-WS
-  = (SPACE / NEW_LINE)+
-
-COLON
-  = WS* ":" WS*
-
-begin_body
-  = WS* "{" WS*
-
-close_body
-  = WS* "}" WS*
-
-begin_args
-  = WS* "(" WS*
-
-close_args
-  = WS* ")" WS*
+SPACE = [ \t]+
+NEW_LINE = ("\r\n" / [\r\n])+
