@@ -1,79 +1,81 @@
-{
-  const check = (obj) => obj || {};
-}
-
 start
-  = ws* definitions:(interface / object / enum)* ws*
+  = WS* definitions:(Enum / Interface / Object)* WS*
     { return definitions; }
+Enum
+  = "enum" SPACE name:Type begin_body values:EnumValueList close_body
+    { return { type: "ENUM", name, values }; }
 
-newline
-  = "\r\n" / [\r\n]
+Interface
+  = "interface" SPACE name:Type begin_body fields:FieldList close_body
+    { return { type: "INTERFACE", name, fields }; }
 
-ws
-  = [ \t] / newline
+Object
+  = "type" SPACE name:Type interfaces:(COLON list:TypeList { return list; })? begin_body fields:FieldList close_body
+    { return { type: "TYPE", name, fields, ...(interfaces && { interfaces }) }; }
 
-lowercase
-  = [a-z]
+Identifier
+  = [a-z]([a-z0-9_]i)*
+    { return text(); }
 
-uppercase
-  = [A-Z]
-
-key
-  = ws* first:lowercase rest:(lowercase / uppercase)* ws*
-    { return first + rest.join(""); }
-
-type
-  = first:uppercase rest:(lowercase / uppercase)*
-    { return first + rest.join(""); }
-
-commaseparated_type
-  = ws* [,]? ws* type:type ws*
-    { return type; }
-
-commaseparated_field
-  = ws* [,]? ws* field:field ws*
-    { return field; }
-
-typelist
-  = ws* first:type rest:commaseparated_type* ws*
-    { return [first, ...rest]; }
-
-field_type
-  = ws* type:type required:[!]? ws*
+ReturnType
+  = type:Type required:"!"?
     { return { type, ...(required ? { required: !!required } : {}) }; }
-  / ws* "[" type:type "]" required:[!]? ws*
-    { return { type, ...(required ? { required: !!required } : {}), list: true }; }
+  / "[" type:Type "]"
+    { return { type, list: true }; }
 
-params
-  = "(" args:field ")"
-    { return args; }
-  / "(" first:field rest:commaseparated_field* ")"
-    { return Object.assign.apply(null, [first].concat(rest)); }
+Type
+  = [A-Z]([a-z0-9_]i)*
+    { return text(); }
 
-field
-  = key:key args:params? ":" type:field_type ws* description:comment?
-    { return { [key]: Object.assign(description ? { description } : {}, type, args ? { args } : {}) }; }
+TypeList
+  = head:Type tail:(SEPARATOR type:Type { return type; })*
+    { return [head, ...tail]; }
 
-fields
-  = ws* "{" ws* fields:field+ ws* "}" ws*
-    { return Object.assign.apply(null, fields); }
+Field
+  = name:Identifier args:(begin_args fields:FieldList close_args { return fields; })? COLON type:ReturnType
+    { return { [name]: { ...type, ...(args && { args }) } }; }
 
-comment
-  = ws* "//" comment:[A-Za-z0-9, \t]+ ws*
-    { return comment.join("").trim() }
+FieldList
+  = head:Field tail:(SEPARATOR field:Field { return field; })*
+    { return [head, ...tail].reduce((result, field) => ({ ...result, ...field }), {}); }
 
-interface
-  = description:comment? "interface" ws+ name:type ws* fields:fields
-    { return Object.assign({ type: "INTERFACE", name }, description ? { description } : {}, { fields }); }
+EnumValue
+  = [A-Z][A-Z0-9_]+
+    { return text(); }
 
-object
-  = description:comment? "type" ws+ name:type ws* [:]? ws* interfaces:typelist? fields:fields
-    { return Object.assign({ type: "TYPE", name }, description ? { description } : {}, { fields }, interfaces ? { interfaces } : {}); }
+EnumValueList
+  = head:EnumValue tail:(SEPARATOR value:EnumValue { return value; })*
+    { return [head, ...tail]; }
 
-enum_value
-  = ws* name:[A-Z]+ ws*
-    { return name.join(""); }
+SEPARATOR
+  = COMMA_SEP / EOL_SEP
 
-enum
-  = description:comment? "enum" ws+ name:type ws* "{" ws* values:enum_value+ ws* "}" ws*
-    { return Object.assign({ type: "ENUM", name }, description ? { description } : {}, { values }); }
+COMMA_SEP
+  = WS* "," WS*
+
+EOL_SEP
+  = SPACE* NEW_LINE SPACE*
+
+NEW_LINE
+  = ("\r\n" / [\r\n])+
+
+SPACE
+  = [ \t]+
+
+WS
+  = (SPACE / NEW_LINE)+
+
+COLON
+  = WS* ":" WS*
+
+begin_body
+  = WS* "{" WS*
+
+close_body
+  = WS* "}" WS*
+
+begin_args
+  = WS* "(" WS*
+
+close_args
+  = WS* ")" WS*
