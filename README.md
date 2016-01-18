@@ -72,20 +72,17 @@ type Query {
       },
       "name": {
         "description": "The name of the character",
-        "type": "String",
-        "required": false
+        "type": "String"
       },
       "friends": {
         "description": "The friends of the character, or an empty list if they have none",
         "type": "Character",
-        "required": false,
-        "array": true
+        "list": true
       },
       "appearsIn": {
         "description": "Which movies they appear in",
         "type": "Episode",
-        "required": false,
-        "array": true
+        "list": true
       }
     }
   },
@@ -101,25 +98,21 @@ type Query {
       },
       "name": {
         "description": "The name of the human",
-        "type": "String",
-        "required": false
+        "type": "String"
       },
       "friends": {
         "description": "The friends of the character, or an empty list if they have none",
         "type": "Character",
-        "required": false,
-        "array": true
+        "list": true
       },
       "appearsIn": {
         "description": "Which movies they appear in",
         "type": "Episode",
-        "required": false,
-        "array": true
+        "list": true
       },
       "homePlanet": {
         "description": "The home planet of the human, or null if unknown",
-        "type": "String",
-        "required": false
+        "type": "String"
       }
     },
     "interfaces": [
@@ -138,25 +131,21 @@ type Query {
       },
       "name": {
         "description": "The name of the droid",
-        "type": "String",
-        "required": false
+        "type": "String"
       },
       "friends": {
         "description": "The friends of the character, or an empty list if they have none",
         "type": "Character",
-        "required": false,
-        "array": true
+        "list": true
       },
       "appearsIn": {
         "description": "Which movies they appear in",
         "type": "Episode",
-        "required": false,
-        "array": true
+        "list": true
       },
       "primaryFunction": {
         "description": "The primary function of the droid",
-        "type": "String",
-        "required": false
+        "type": "String"
       }
     },
     "interfaces": [
@@ -169,17 +158,14 @@ type Query {
     "fields": {
       "hero": {
         "type": "Character",
-        "required": false,
         "args": {
           "episode": {
-            "type": "Episode",
-            "required": false
+            "type": "Episode"
           }
         }
       },
       "human": {
         "type": "Human",
-        "required": false,
         "args": {
           "id": {
             "type": "String",
@@ -189,7 +175,6 @@ type Query {
       },
       "droid": {
         "type": "Droid",
-        "required": false,
         "args": {
           "id": {
             "type": "String",
