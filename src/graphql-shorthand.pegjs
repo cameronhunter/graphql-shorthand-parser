@@ -40,12 +40,14 @@ FieldList
     { return [head, ...tail].reduce((result, field) => ({ ...result, ...field }), {}); }
 
 EnumValue
-  = [A-Z][A-Z0-9_]+
-    { return text(); }
+  = $([A-Z][A-Z0-9_]+)
 
 EnumValueList
   = head:EnumValue tail:(SEPARATOR value:EnumValue { return value; })*
     { return [head, ...tail]; }
+
+Comment
+  = "//" comment:[a-z0-9,]
 
 BEGIN_BODY = WS* "{" WS*
 CLOSE_BODY = WS* "}" WS*
