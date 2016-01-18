@@ -1,5 +1,5 @@
 {
-  const check = (obj) => obj ? { obj } : {};
+  const check = (obj) => obj || {};
 }
 
 start
@@ -36,13 +36,13 @@ commaseparated_field
 
 typelist
   = ws* first:type rest:commaseparated_type* ws*
-    { return [first].concat(rest); }
+    { return [first, ...rest]; }
 
 field_type
   = ws* type:type required:[!]? ws*
-    { return { type, required: !!required }; }
+    { return { type, ...(required ? { required: !!required } : {}) }; }
   / ws* "[" type:type "]" required:[!]? ws*
-    { return { type, required: !!required, array: true }; }
+    { return { type, ...(required ? { required: !!required } : {}), list: true }; }
 
 params
   = "(" args:field ")"
@@ -52,7 +52,7 @@ params
 
 field
   = key:key args:params? ":" type:field_type ws* description:comment?
-    { return { [key]: Object.assign(check(description), type, check(args)) }; }
+    { return { [key]: Object.assign(description ? { description } : {}, type, args ? { args } : {}) }; }
 
 fields
   = ws* "{" ws* fields:field+ ws* "}" ws*
@@ -64,11 +64,11 @@ comment
 
 interface
   = description:comment? "interface" ws+ name:type ws* fields:fields
-    { return Object.assign({ type: "INTERFACE", name }, check(description), { fields }); }
+    { return Object.assign({ type: "INTERFACE", name }, description ? { description } : {}, { fields }); }
 
 object
   = description:comment? "type" ws+ name:type ws* [:]? ws* interfaces:typelist? fields:fields
-    { return Object.assign({ type: "TYPE", name }, check(description), { fields }, check(interfaces)); }
+    { return Object.assign({ type: "TYPE", name }, description ? { description } : {}, { fields }, interfaces ? { interfaces } : {}); }
 
 enum_value
   = ws* name:[A-Z]+ ws*
@@ -76,4 +76,4 @@ enum_value
 
 enum
   = description:comment? "enum" ws+ name:type ws* "{" ws* values:enum_value+ ws* "}" ws*
-    { return Object.assign({ type: "ENUM", name }, check(description), { values }); }
+    { return Object.assign({ type: "ENUM", name }, description ? { description } : {}, { values }); }

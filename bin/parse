@@ -2,7 +2,7 @@
 
 var path = require("path");
 var fs = require("fs");
-var parser = require("../dist/parser");
+var parser = require("..");
 
 fs.readFile(process.argv[2], "utf8", function(error, shorthand) {
   console.log(JSON.stringify(parser.parse(shorthand), null, 2));
