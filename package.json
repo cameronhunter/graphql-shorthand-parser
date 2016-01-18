@@ -1,6 +1,6 @@
 {
   "name": "graphql-shorthand-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Parse GraphQL schemas from shorthand notation",
   "main": "dist/graphql-shorthand.js",
   "scripts": {
