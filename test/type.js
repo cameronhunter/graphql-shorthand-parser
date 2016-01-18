@@ -3,6 +3,7 @@ import { parse } from "..";
 
 test("type definition", t => {
   const [actual] = parse(`
+    // A humanoid creature in the Star Wars universe
     type Human : Character {
       id: String!
       name: String
@@ -15,6 +16,7 @@ test("type definition", t => {
   const expected = {
     type: "TYPE",
     name: "Human",
+    description: "A humanoid creature in the Star Wars universe",
     interfaces: ["Character"],
     fields: {
       id: { type: "String", required: true },

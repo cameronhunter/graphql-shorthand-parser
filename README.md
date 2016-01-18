@@ -16,28 +16,28 @@ enum Episode {
 
 // A character in the Star Wars Trilogy
 interface Character {
-  id: String!               // The id of the character
-  name: String              // The name of the character
-  friends: [Character]      // The friends of the character, or an empty list if they have none
-  appearsIn: [Episode]      // Which movies they appear in
+  id: String!
+  name: String
+  friends: [Character]
+  appearsIn: [Episode]
 }
 
 // A humanoid creature in the Star Wars universe
 type Human : Character {
-  id: String!               // The id of the human
-  name: String              // The name of the human
-  friends: [Character]      // The friends of the character, or an empty list if they have none
-  appearsIn: [Episode]      // Which movies they appear in
-  homePlanet: String        // The home planet of the human, or null if unknown
+  id: String!
+  name: String
+  friends: [Character]
+  appearsIn: [Episode]
+  homePlanet: String
 }
 
 // A mechanical creature in the Star Wars universe
 type Droid : Character {
-  id: String!               // The id of the droid
-  name: String              // The name of the droid
-  friends: [Character]      // The friends of the character, or an empty list if they have none
-  appearsIn: [Episode]      // Which movies they appear in
-  primaryFunction: String   // The primary function of the droid
+  id: String!
+  name: String
+  friends: [Character]
+  appearsIn: [Episode]
+  primaryFunction: String
 }
 
 type Query {
@@ -66,21 +66,17 @@ type Query {
     "description": "A character in the Star Wars Trilogy",
     "fields": {
       "id": {
-        "description": "The id of the character",
         "type": "String",
         "required": true
       },
       "name": {
-        "description": "The name of the character",
         "type": "String"
       },
       "friends": {
-        "description": "The friends of the character, or an empty list if they have none",
         "type": "Character",
         "list": true
       },
       "appearsIn": {
-        "description": "Which movies they appear in",
         "type": "Episode",
         "list": true
       }
@@ -92,26 +88,21 @@ type Query {
     "description": "A humanoid creature in the Star Wars universe",
     "fields": {
       "id": {
-        "description": "The id of the human",
         "type": "String",
         "required": true
       },
       "name": {
-        "description": "The name of the human",
         "type": "String"
       },
       "friends": {
-        "description": "The friends of the character, or an empty list if they have none",
         "type": "Character",
         "list": true
       },
       "appearsIn": {
-        "description": "Which movies they appear in",
         "type": "Episode",
         "list": true
       },
       "homePlanet": {
-        "description": "The home planet of the human, or null if unknown",
         "type": "String"
       }
     },
@@ -125,26 +116,21 @@ type Query {
     "description": "A mechanical creature in the Star Wars universe",
     "fields": {
       "id": {
-        "description": "The id of the droid",
         "type": "String",
         "required": true
       },
       "name": {
-        "description": "The name of the droid",
         "type": "String"
       },
       "friends": {
-        "description": "The friends of the character, or an empty list if they have none",
         "type": "Character",
         "list": true
       },
       "appearsIn": {
-        "description": "Which movies they appear in",
         "type": "Episode",
         "list": true
       },
       "primaryFunction": {
-        "description": "The primary function of the droid",
         "type": "String"
       }
     },
