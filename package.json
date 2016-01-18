@@ -1,6 +1,6 @@
 {
   "name": "graphql-shorthand-parser",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Parse GraphQL schemas from shorthand notation",
   "main": "dist/graphql-shorthand.js",
   "scripts": {
@@ -23,7 +23,6 @@
     "ava": "^0.10.0",
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-stage-1": "^6.3.13",
-    "npm-watch": "^0.1.1",
     "rollup": "^0.25.0",
     "rollup-plugin-babel": "^2.3.9",
     "rollup-plugin-pegjs": "^1.0.3",
