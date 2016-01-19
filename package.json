@@ -25,7 +25,7 @@
     "babel-preset-stage-1": "^6.3.13",
     "rollup": "^0.25.0",
     "rollup-plugin-babel": "^2.3.9",
-    "rollup-plugin-pegjs": "^1.0.3",
+    "rollup-plugin-pegjs": "^2.0.0",
     "tap-diff": "^0.1.1"
   }
 }
