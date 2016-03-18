@@ -41,7 +41,9 @@ EnumIdentList
     { return [head, ...tail]; }
 
 Comment
-  = "//" comment:(!EOL char:CHAR { return char; })* EOL_SEP
+  = "#" comment:(!EOL char:CHAR { return char; })* EOL_SEP
+    { return comment.join("").trim(); }
+  / "//" comment:(!EOL char:CHAR { return char; })* EOL_SEP
     { return comment.join("").trim(); }
   / "/*" comment:(!"*/" char:CHAR { return char; })* "*/" EOL_SEP
     { return comment.join("").replace(/\n\s*[*]?\s*/g, " ").replace(/\s+/, " ").trim(); }
