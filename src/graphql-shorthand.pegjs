@@ -41,12 +41,12 @@ EnumIdentList
     { return [head, ...tail]; }
 
 Comment
-  = "#" comment:(!EOL char:CHAR { return char; })* EOL_SEP
-    { return comment.join("").trim(); }
-  / "//" comment:(!EOL char:CHAR { return char; })* EOL_SEP
+  = LINE_COMMENT comment:(!EOL char:CHAR { return char; })* EOL_SEP
     { return comment.join("").trim(); }
   / "/*" comment:(!"*/" char:CHAR { return char; })* "*/" EOL_SEP
     { return comment.join("").replace(/\n\s*[*]?\s*/g, " ").replace(/\s+/, " ").trim(); }
+
+LINE_COMMENT = "#" / "//"
 
 BEGIN_BODY = WS* "{" WS*
 CLOSE_BODY = WS* "}" WS*
