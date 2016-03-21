@@ -29,8 +29,8 @@ TypeList
     { return [head, ...tail]; }
 
 Field
-  = name:Ident args:(BEGIN_ARGS fields:FieldList CLOSE_ARGS { return fields; })? COLON type:ReturnType
-    { return { [name]: { ...type, ...(args && { args }) } }; }
+  = description:Comment? name:Ident args:(BEGIN_ARGS fields:FieldList CLOSE_ARGS { return fields; })? COLON type:ReturnType
+    { return { [name]: { ...type, ...(args && { args }), ...(description && { description }) } }; }
 
 FieldList
   = head:Field tail:(EOL_SEP field:Field { return field; })*
@@ -41,12 +41,12 @@ EnumIdentList
     { return [head, ...tail]; }
 
 Comment
-  = "#" comment:(!EOL char:CHAR { return char; })* EOL_SEP
-    { return comment.join("").trim(); }
-  / "//" comment:(!EOL char:CHAR { return char; })* EOL_SEP
+  = LINE_COMMENT comment:(!EOL char:CHAR { return char; })* EOL_SEP
     { return comment.join("").trim(); }
   / "/*" comment:(!"*/" char:CHAR { return char; })* "*/" EOL_SEP
     { return comment.join("").replace(/\n\s*[*]?\s*/g, " ").replace(/\s+/, " ").trim(); }
+
+LINE_COMMENT = "#" / "//"
 
 BEGIN_BODY = WS* "{" WS*
 CLOSE_BODY = WS* "}" WS*
