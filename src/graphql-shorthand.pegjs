@@ -29,8 +29,8 @@ TypeList
     { return [head, ...tail]; }
 
 Field
-  = name:Ident args:(BEGIN_ARGS fields:FieldList CLOSE_ARGS { return fields; })? COLON type:ReturnType
-    { return { [name]: { ...type, ...(args && { args }) } }; }
+  = description:Comment? name:Ident args:(BEGIN_ARGS fields:FieldList CLOSE_ARGS { return fields; })? COLON type:ReturnType
+    { return { [name]: { ...type, ...(args && { args }), ...(description && { description }) } }; }
 
 FieldList
   = head:Field tail:(EOL_SEP field:Field { return field; })*
