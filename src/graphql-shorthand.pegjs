@@ -33,7 +33,7 @@ Field
     { return { [name]: { ...type, ...(args && { args }) } }; }
 
 FieldList
-  = head:Field tail:(EOL_SEP field:Field { return field; })*
+  = head:Field tail:(SEP field:Field { return field; })*
     { return [head, ...tail].reduce((result, field) => ({ ...result, ...field }), {}); }
 
 EnumIdentList
@@ -62,6 +62,8 @@ COLON = WS* ":" WS*
 
 COMMA_SEP = WS* "," WS*
 EOL_SEP = SPACE* EOL SPACE*
+
+SEP = (COMMA_SEP / EOL_SEP / WS)+
 
 SPACE = [ \t]+
 EOL = "\n" / "\r\n" / "\r" / "\u2028" / "\u2029"
