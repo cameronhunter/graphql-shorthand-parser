@@ -1,5 +1,5 @@
 start
-  = WS* definitions:(Enum / Interface / Object)* WS*
+  = SEP* definitions:(Enum / Interface / Object)* WS*
     { return definitions; }
 
 Ident = $([a-z]([a-z0-9_]i)*)
@@ -7,15 +7,15 @@ TypeIdent = $([A-Z]([a-z0-9_]i)*)
 EnumIdent = $([A-Z][A-Z0-9_]*)
 
 Enum
-  = description:Comment? "enum" SPACE name:TypeIdent BEGIN_BODY values:EnumIdentList CLOSE_BODY
+  = description:Comment? "enum" SEP name:TypeIdent BEGIN_BODY values:EnumIdentList CLOSE_BODY
     { return { type: "ENUM", name, ...(description && { description }), values }; }
 
 Interface
-  = description:Comment? "interface" SPACE name:TypeIdent BEGIN_BODY fields:FieldList CLOSE_BODY
+  = description:Comment? "interface" SEP name:TypeIdent BEGIN_BODY fields:FieldList CLOSE_BODY
     { return { type: "INTERFACE", name, ...(description && { description }), fields }; }
 
 Object
-  = description:Comment? "type" SPACE name:TypeIdent interfaces:(COLON list:TypeList { return list; })? BEGIN_BODY fields:FieldList CLOSE_BODY
+  = description:Comment? "type" SEP name:TypeIdent interfaces:(COLON list:TypeList { return list; })? BEGIN_BODY fields:FieldList CLOSE_BODY
     { return { type: "TYPE", name, ...(description && { description }), fields, ...(interfaces && { interfaces }) }; }
 
 ReturnType
@@ -25,7 +25,7 @@ ReturnType
     { return { type, list: true }; }
 
 TypeList
-  = head:TypeIdent tail:(COMMA_SEP type:TypeIdent { return type; })*
+  = head:TypeIdent tail:(SEP type:TypeIdent { return type; })*
     { return [head, ...tail]; }
 
 Field
@@ -33,11 +33,11 @@ Field
     { return { [name]: { ...type, ...(args && { args }), ...(description && { description }) } }; }
 
 FieldList
-  = head:Field tail:(EOL_SEP field:Field { return field; })*
+  = head:Field tail:(SEP field:Field { return field; })*
     { return [head, ...tail].reduce((result, field) => ({ ...result, ...field }), {}); }
 
 EnumIdentList
-  = head:EnumIdent tail:(EOL_SEP value:EnumIdent { return value; })*
+  = head:EnumIdent tail:(SEP value:EnumIdent { return value; })*
     { return [head, ...tail]; }
 
 Comment
@@ -62,6 +62,8 @@ COLON = WS* ":" WS*
 
 COMMA_SEP = WS* "," WS*
 EOL_SEP = SPACE* EOL SPACE*
+
+SEP = (COMMA_SEP / EOL_SEP / WS)+
 
 SPACE = [ \t]+
 EOL = "\n" / "\r\n" / "\r" / "\u2028" / "\u2029"
