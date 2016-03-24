@@ -23,8 +23,26 @@ test("input definition", t => {
   return t.same(actual, expected);
 });
 
+test("input with boolean defaultValue", t => {
+  const [actual] = parse(`
+    input Person {
+      alive: Boolean = true
+    }
+  `);
 
-test("input with default values", t => {
+  const expected = {
+    type: "INPUT",
+    name: "Person",
+    fields: {
+      alive: { type: "Boolean", defaultValue: true },
+    }
+  };
+
+  return t.same(actual, expected);
+});
+
+
+test("input with string default values", t => {
   const [actual] = parse(`
     // A Person
     input Person {
@@ -48,3 +66,40 @@ test("input with default values", t => {
   return t.same(actual, expected);
 });
 
+test("input with integer defaultValue", t => {
+  const [actual] = parse(`
+    input Person {
+      age: Int = 32
+    }
+  `);
+
+  const expected = {
+    type: "INPUT",
+    name: "Person",
+    fields: {
+      age: { type: "Int", defaultValue: 32 },
+    }
+  };
+
+  return t.same(actual, expected);
+});
+
+test("input with float defaultValue", t => {
+  const [actual] = parse(`
+    input Person {
+      height: Float = 1.82
+      iq: Float = .5
+    }
+  `);
+
+  const expected = {
+    type: "INPUT",
+    name: "Person",
+    fields: {
+      height: { type: "Float", defaultValue: 1.82 },
+      iq: { type: "Float", defaultValue: 0.5 },
+    }
+  };
+
+  return t.same(actual, expected);
+});

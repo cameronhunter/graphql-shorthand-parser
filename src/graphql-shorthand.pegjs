@@ -5,6 +5,7 @@ start
 Ident = $([a-z]([a-z0-9_]i)*)
 TypeIdent = $([A-Z]([a-z0-9_]i)*)
 EnumIdent = $([A-Z][A-Z0-9_]*)
+NumberIdent = $([.+-]?[0-9]+([.][0-9]+)?)
 
 Enum
   = description:Comment? "enum" SPACE name:TypeIdent BEGIN_BODY values:EnumIdentList CLOSE_BODY
@@ -59,13 +60,20 @@ Comment
     { return comment.join("").replace(/\n\s*[*]?\s*/g, " ").replace(/\s+/, " ").trim(); }
 
 Literal
-  = StringLiteral
+  = StringLiteral / BooleanLiteral / NumericLiteral
 
 StringLiteral
   = '"' chars:DoubleStringCharacter* '"' { return chars.join(""); }
 
 DoubleStringCharacter
   = !('"' / "\\" / EOL) . { return text(); }
+
+BooleanLiteral
+  = "true"  { return true }
+  / "false"  { return false }
+
+NumericLiteral
+  = value:NumberIdent { return Number(value.replace(/^[.]/, '0.')); }
 
 LINE_COMMENT = "#" / "//"
 
