@@ -6,6 +6,7 @@ test("input definition", t => {
     // A Person
     input Person {
       id: String!
+      // The full name
       name: String
     }
   `);
@@ -16,7 +17,7 @@ test("input definition", t => {
     description: "A Person",
     fields: {
       id: { type: "String", required: true },
-      name: { type: "String" }
+      name: { type: "String", description: "The full name" }
     }
   };
 
