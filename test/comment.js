@@ -14,7 +14,7 @@ test("add '#' comments as description", t => {
     values: ["FOO"]
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("add '//' comments as description", t => {
@@ -30,7 +30,7 @@ test("add '//' comments as description", t => {
     values: ["FOO"]
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("add '/**/' comments as description", t => {
@@ -48,7 +48,7 @@ test("add '/**/' comments as description", t => {
     values: ["FOO"]
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("add comments as field description", t => {
@@ -80,5 +80,5 @@ test("add comments as field description", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });

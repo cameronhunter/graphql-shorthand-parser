@@ -27,7 +27,7 @@ test("type definition", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("type definition with parameters", t => {
@@ -58,7 +58,7 @@ test("type definition with parameters", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 
@@ -86,5 +86,5 @@ test("type definition with multiple interfaces", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });

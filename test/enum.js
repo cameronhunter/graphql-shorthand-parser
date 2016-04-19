@@ -18,5 +18,5 @@ test("enum definition", t => {
     values: ["NEWHOPE", "EMPIRE", "JEDI"]
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });

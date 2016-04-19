@@ -21,12 +21,12 @@
   "author": "Cameron Hunter <hello@cameronhunter.co.uk>",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.13.0",
+    "ava": "^0.14.0",
     "babel-preset-es2015-rollup": "^1.1.1",
-    "babel-preset-stage-1": "^6.3.13",
-    "rollup": "^0.25.0",
-    "rollup-plugin-babel": "^2.3.9",
-    "rollup-plugin-pegjs": "^2.0.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "rollup": "^0.25.8",
+    "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-pegjs": "^2.1.0",
     "tap-diff": "^0.1.1"
   }
 }

@@ -21,7 +21,7 @@ test("input definition", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("input with boolean defaultValue", t => {
@@ -39,7 +39,7 @@ test("input with boolean defaultValue", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 
@@ -64,7 +64,7 @@ test("input with string default values", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("input with integer defaultValue", t => {
@@ -82,7 +82,7 @@ test("input with integer defaultValue", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
 
 test("input with float defaultValue", t => {
@@ -102,5 +102,5 @@ test("input with float defaultValue", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });

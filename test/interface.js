@@ -24,5 +24,5 @@ test("interface definition", t => {
     }
   };
 
-  return t.same(actual, expected);
+  return t.deepEqual(actual, expected);
 });
